@@ -1,6 +1,6 @@
 import * as types from "../constants/user.constants";
 const initialState = {
-  loading: true,
+  loading: false,
   user: null,
   error: ""
 };
