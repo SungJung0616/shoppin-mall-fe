@@ -39,12 +39,13 @@ const loginWithGoogle = (token) => async (dispatch) => {
 };
 
 const registerUser =
-  ({ email, name, password },navigate) =>
-  async (dispatch) => {
+  ({ email, name, password },navigate) => async (dispatch) => {
     try{
       dispatch( {type: types.REGISTER_USER_REQUEST})
+
       const response = await api.post('/user', {email,name,password});
-      if(response.status !==200) throw new Error(response.error)
+
+      if(response.status !==200) throw new Error(response.error || "Failed to register")
       dispatch({type:types.REGISTER_USER_SUCCESS})
       dispatch(commonUiActions.showToastMessage("Register Success","success"));
       navigate("/login");
@@ -52,6 +53,7 @@ const registerUser =
       dispatch({type: types.REGISTER_USER_FAIL, payload:error.response?.data?.message || error.message})
     }
   };
+
 export const userActions = {
   loginWithToken,
   loginWithEmail,
