@@ -49,7 +49,7 @@ const registerUser =
       dispatch(commonUiActions.showToastMessage("Register Success","success"));
       navigate("/login");
     }catch(error){
-      dispatch({type: types.REGISTER_USER_FAIL, payload:error.error})
+      dispatch({type: types.REGISTER_USER_FAIL, payload:error.response?.data?.message || error.message})
     }
   };
 export const userActions = {
