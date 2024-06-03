@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -52,10 +52,12 @@ const RegisterPage = () => {
     setFormData((prevState) => ({
       ...prevState,
       [id]: type === "checkbox" ? checked : value,
-    }));
+    }));    
+  };  
 
-    
-  };
+  useEffect(() => {
+    dispatch(userActions.clearError());
+  }, [dispatch]);
 
   return (
     <Container className="register-area">

@@ -28,6 +28,12 @@ const Login = () => {
       navigate("/");
     }
   }, [user, navigate]);
+
+  useEffect(() => {
+    dispatch(userActions.clearError());
+  }, [dispatch]);
+
+
   return (
     <>
       <Container className="login-area">

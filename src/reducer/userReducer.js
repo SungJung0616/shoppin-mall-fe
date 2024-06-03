@@ -21,10 +21,12 @@ function userReducer(state = initialState, action) {
     case types.REGISTER_USER_FAIL:
       return {...state, loading: false, error: payload};
     case types.LOGIN_WITH_TOKEN_FAIL:
-      return {...state, loading: false}
+      return {...state, loading: false};
     case types.LOGOUT:
-      return {...state, user:null}
-      default:
+      return {...state, user:null};
+    case types.CLEAR_ERROR:
+      return {...state, error: null };
+    default:
       return state;
   }
   

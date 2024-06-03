@@ -46,12 +46,19 @@ const registerUser =
       const response = await api.post('/user', {email,name,password});
 
       if(response.status !==200) throw new Error(response.error || "Failed to register")
+
       dispatch({type:types.REGISTER_USER_SUCCESS})
       dispatch(commonUiActions.showToastMessage("Register Success","success"));
+
       navigate("/login");
+      
     }catch(error){
       dispatch({type: types.REGISTER_USER_FAIL, payload:error.response?.data?.message || error.message})
     }
+  };
+
+  const clearError =() =>async (dispatch) =>{
+    dispatch({ type: types.CLEAR_ERROR })
   };
 
 export const userActions = {
@@ -60,4 +67,5 @@ export const userActions = {
   logout,
   loginWithGoogle,
   registerUser,
+  clearError
 };
