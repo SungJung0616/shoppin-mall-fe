@@ -34,13 +34,14 @@ const AdminProduct = () => {
   ];
 
   //상품리스트 가져오기 (url쿼리 맞춰서)
-  useEffect(()=>{
-    dispatch(productActions.getProductList())
-  },[])
+  useEffect(() => {
+    dispatch(productActions.getProductList(searchQuery));
+  }, [searchQuery]);
 
   useEffect(() => {
-    //검색어나 페이지가 바뀌면 url바꿔주기 (검색어또는 페이지가 바뀜 => url 바꿔줌=> url쿼리 읽어옴=> 이 쿼리값 맞춰서  상품리스트 가져오기)
-  }, [searchQuery]);
+    const newQuery = new URLSearchParams(searchQuery).toString();
+    navigate(`?${newQuery}`);
+  }, [searchQuery, navigate]);
 
   const deleteItem = (id) => {
     //아이템 삭제하가ㅣ
