@@ -69,6 +69,7 @@ const Login = () => {
                 onChange={(event) => setPassword(event.target.value)}
               />
             </Form.Group>
+            <div>ID : admin@gmail.com / PW : 123</div>
             <div className="display-space-between login-button-area">
               <Button variant="danger" type="submit">
                 Login
