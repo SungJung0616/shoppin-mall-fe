@@ -10,10 +10,12 @@ const SearchBox = ({ searchQuery, setSearchQuery, placeholder, field }) => {
   const onCheckEnter = (event) => {
     if (event.key === "Enter") {
       setSearchQuery({ ...searchQuery, page: 1, [field]: event.target.value });
+      setKeyword("")
     }
   };
   const handleClick = () => {
     setSearchQuery({ ...searchQuery, page: 1, [field]: keyword })
+    setKeyword("")
   }
   
   return (
