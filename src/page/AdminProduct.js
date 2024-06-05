@@ -84,7 +84,7 @@ useEffect(() => {
   return (
     <div className="locate-center">
       <Container>
-        <div className="mt-2">
+        <div className="mt-2 top-container">
           <SearchBox
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
