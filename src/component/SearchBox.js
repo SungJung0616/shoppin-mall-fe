@@ -12,9 +12,13 @@ const SearchBox = ({ searchQuery, setSearchQuery, placeholder, field }) => {
       setSearchQuery({ ...searchQuery, page: 1, [field]: event.target.value });
     }
   };
+  const handleClick = () => {
+    setSearchQuery({ ...searchQuery, page: 1, [field]: keyword })
+  }
+  
   return (
     <div className="search-box">
-      <FontAwesomeIcon icon={faSearch} />
+      <FontAwesomeIcon icon={faSearch} onClick={handleClick}/>
       <input
         type="text"
         placeholder={placeholder}

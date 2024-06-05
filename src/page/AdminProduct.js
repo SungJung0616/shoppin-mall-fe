@@ -63,6 +63,10 @@ const AdminProduct = () => {
     //  쿼리에 페이지값 바꿔주기
   };
 
+  const handleShowAll = () => {
+    setSearchQuery({ page: 1, name: "" });
+  };
+
   return (
     <div className="locate-center">
       <Container>
@@ -73,6 +77,9 @@ const AdminProduct = () => {
             placeholder="제품 이름으로 검색"
             field="name"
           />
+           <Button className="mt-2 mb-2" onClick={handleShowAll}>
+          Show All
+        </Button>
         </div>
         <Button className="mt-2 mb-2" onClick={handleClickNewItem}>
           Add New Item +
