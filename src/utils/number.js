@@ -1,6 +1,6 @@
 export const currencyFormat = (value) => {
   const number = value !== undefined ? value : 0;
-  return number.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+  return `₩ ${number.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
 };
 
 export const cc_expires_format = (string) => {

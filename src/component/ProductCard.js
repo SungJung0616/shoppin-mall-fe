@@ -1,20 +1,27 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { currencyFormat } from "../utils/number";
+import "../style/productCard.style.css";
 
-const ProductCard = () => {
+const ProductCard = ({ product }) => {
   const navigate = useNavigate();
   const showProduct = (id) => {
     // 상품 디테일 페이지로 가기
+    navigate(`/product/${id}`);
   };
   return (
-    <div className="card" onClick={() => showProduct("hard_code")}>
-      <img
-        src="https://lp2.hm.com/hmgoepprod?set=source[/e0/b8/e0b829cfa5e7d45807fa6068704a6dd65558e735.jpg],origin[dam],category[],type[LOOKBOOK],res[z],hmver[1]&call=url[file:/product/main]"
-        alt=""
-      />
-      <div>리넨셔츠</div>
-      <div>₩ 45,000</div>
+    <div 
+      className="card" 
+      onClick={() => showProduct(product?._id)} 
+      style={{ backgroundImage: `url(${product?.image})` }}
+    >
+      <div className="overlay">
+        <div className="card-info">
+          <div>{product?.name}</div>
+          <div>{currencyFormat(product.price)}</div>
+        </div>
+      </div>
+      
     </div>
   );
 };
