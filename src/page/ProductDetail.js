@@ -83,9 +83,9 @@ const ProductDetail = () => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu className="stock-drop-down">
-              {Object.keys(product.data.stock).map((item) => (
-                <Dropdown.Item key={item} eventKey={item} disabled={product.data.stock[item] <= 0}>
-                  {item.toUpperCase()} {product.data.stock[item] <= 0 ? "(Out of Stock)" : ""}
+              {Object.entries(product.data.stock).map(([size, quantity]) => (
+                <Dropdown.Item key={size} eventKey={size} disabled={quantity <= 0}>
+                  {size.toUpperCase()} {quantity <= 0 ? "(Out of Stock)" : `(${quantity})`}
                 </Dropdown.Item>
               ))}
             </Dropdown.Menu>
