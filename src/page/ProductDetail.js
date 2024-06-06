@@ -10,39 +10,42 @@ import { currencyFormat } from "../utils/number";
 import "../style/productDetail.style.css";
 
 const ProductDetail = () => {
-  const dispatch = useDispatch();  
-  const [size, setSize] = useState("");
+  const dispatch = useDispatch();
+  const [selectedStock, setSelectedStock] = useState("");
   const { id } = useParams();
-  const [sizeError, setSizeError] = useState(false);
+  const [stockError, setStockError] = useState(false);
 
-  const product = useSelector((state) => state.product.selectedProduct);  
+  const product = useSelector((state) => state.product.selectedProduct);
   const loading = useSelector((state) => state.product.loading);
   const error = useSelector((state) => state.product.error);
 
   const navigate = useNavigate();
 
-   
   useEffect(() => {
-    //상품 디테일 정보 가져오기
+    // 상품 디테일 정보 가져오기
     dispatch(productActions.getProductDetail(id));
-  }, [id]);
+  }, [dispatch, id]);
 
   console.log("Product detail:", product);
-  
+
   const addItemToCart = () => {
-    //사이즈를 아직 선택안했다면 에러
-    // 아직 로그인을 안한유저라면 로그인페이지로
+    if (!selectedStock) {
+      setStockError(true);
+      return;
+    }
+    // 로그인이 되어 있지 않은 경우 로그인 페이지로 이동
     // 카트에 아이템 추가하기
   };
-  const selectSize = (value) => {
-    // 사이즈 추가하기
-    setSize(value);
-    setSizeError(false);
+
+  const selectStock = (value) => {
+    setSelectedStock(value);
+    setStockError(false);
   };
 
-  //카트에러가 있으면 에러메세지 보여주기
+  if (loading) {
+    return <ColorRing />;
+  }
 
-  //에러가 있으면 에러메세지 보여주기
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -67,29 +70,31 @@ const ProductDetail = () => {
           <div className="product-info">{product?.data.description}</div>
 
           <Dropdown
-            className="drop-down size-drop-down"
-            title={size}
-            align="start"
-            onSelect={(value) => selectSize(value)}
+            className="drop-down stock-drop-down"
+            onSelect={selectStock}
           >
             <Dropdown.Toggle
-              className="size-drop-down"
-              variant={sizeError ? "outline-danger" : "outline-dark"}
+              className="stock-drop-down"
+              variant={stockError ? "outline-danger" : "outline-dark"}
               id="dropdown-basic"
               align="start"
             >
-              {size === "" ? "사이즈 선택" : size.toUpperCase()}
+              {selectedStock === "" ? "Select Size" : selectedStock.toUpperCase()}
             </Dropdown.Toggle>
 
-            <Dropdown.Menu className="size-drop-down">
-              <Dropdown.Item>M</Dropdown.Item>
+            <Dropdown.Menu className="stock-drop-down">
+              {Object.keys(product.data.stock).map((item) => (
+                <Dropdown.Item key={item} eventKey={item} disabled={product.data.stock[item] <= 0}>
+                  {item.toUpperCase()} {product.data.stock[item] <= 0 ? "(Out of Stock)" : ""}
+                </Dropdown.Item>
+              ))}
             </Dropdown.Menu>
           </Dropdown>
           <div className="warning-message">
-            {sizeError && "사이즈를 선택해주세요."}
+            {stockError && "Select Size"}
           </div>
           <Button variant="dark" className="add-button" onClick={addItemToCart}>
-            추가
+            Add Item
           </Button>
         </Col>
       </Row>
