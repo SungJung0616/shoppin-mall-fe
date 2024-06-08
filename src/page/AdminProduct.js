@@ -12,10 +12,10 @@ import ProductTable from "../component/ProductTable";
 
 const AdminProduct = () => {
   const navigate = useNavigate();
-  const {productList, totalPageNumber} = useSelector(state=> state.product)
-  const [query, setQuery] = useSearchParams();
+  const {productList, totalPageNumber} = useSelector(state=> state.product)  
   const dispatch = useDispatch();
   const [showDialog, setShowDialog] = useState(false);
+  const [query, setQuery] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState({
     page: query.get("page") || 1,
     name: query.get("name") || "",

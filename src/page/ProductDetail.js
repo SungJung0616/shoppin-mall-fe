@@ -14,7 +14,7 @@ const ProductDetail = () => {
   const [selectedStock, setSelectedStock] = useState("");
   const { id } = useParams();
   const [stockError, setStockError] = useState(false);
-
+  const {user} = useSelector(state=>state.user)
   const product = useSelector((state) => state.product.selectedProduct);
   const loading = useSelector((state) => state.product.loading);
   const error = useSelector((state) => state.product.error);
@@ -34,7 +34,10 @@ const ProductDetail = () => {
       return;
     }
     // 로그인이 되어 있지 않은 경우 로그인 페이지로 이동
+    if(!user) navigate("/login");
     // 카트에 아이템 추가하기
+    console.log("selectedSize",selectedStock)  
+    dispatch(cartActions.addToCart({ id, size: selectedStock }));
   };
 
   const selectStock = (value) => {

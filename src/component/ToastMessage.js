@@ -1,19 +1,21 @@
 import React from "react";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch  } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
+import { commonUiActions } from "../action/commonUiAction";
 import "react-toastify/dist/ReactToastify.css";
 
 const ToastMessage = () => {
+  const dispatch = useDispatch();
   const { toastMessage } = useSelector((state) => state.ui);
 
   useEffect(() => {
-    if (toastMessage) {
+    if (toastMessage.message !== "" && toastMessage.status !== "") {
       const { message, status } = toastMessage;
-      if (message !== "" && status !== "") {
-        toast[status](message, { theme: "colored" });
-      }
+      toast[status](message, { theme: "colored" });
+      dispatch(commonUiActions.clearToastMessage());    
     }
+    
   }, [toastMessage]);
   return (
     <ToastContainer

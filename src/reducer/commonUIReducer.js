@@ -17,6 +17,12 @@ function commonUiReducer(state = initialState, action) {
         },
       };
 
+   case types.CLEAR_TOAST_MESSAGE:
+      return {
+          ...state,
+          toastMessage: { message: "", status: "" },
+        };
+
     default:
       return state;
   }

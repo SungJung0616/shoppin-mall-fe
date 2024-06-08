@@ -21,6 +21,7 @@ const Navbar = ({ user }) => {
                 return navigate("/");
             }
             navigate(`?name=${event.target.value}`);
+            event.target.value = "";         
         }
     };
 

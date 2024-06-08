@@ -90,10 +90,7 @@ body{
   background: none;
   padding-right: 30px;
 }
-.card{
-  border:none !important;
-  margin-bottom: 10px;
-}
+
 
 .choice{
   font-size:11px;
@@ -127,10 +124,7 @@ body{
   width: 100%;
 }
 
-.card:hover{
-  transform: scale(1.1);
-  z-index: 1;
-}
+
 .hide{
   visibility:hidden
 }
