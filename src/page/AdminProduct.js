@@ -49,28 +49,20 @@ useEffect(() => {
 
   useEffect(() => {
     if (!showDialog) {
-      console.log("showDialog false")
       dispatch(productActions.getProductList(searchQuery));
     }
   }, [showDialog]);
 
   const deleteItem = (id) => {
     //아이템 삭제하가ㅣ
-    dispatch(productActions.deleteProduct(id));
-    console.log("click deleteitem", id)
-    
+    dispatch(productActions.deleteProduct(id));       
   };
 
   const openEditForm = (product) => {
-    //edit모드로 설정하고
-    // 아이템 수정다이얼로그 열어주기
-    console.log("click")
-    setMode("edit")
-    console.log("Dispatching SET_SELECTED_PRODUCT action with payload:", product);
-    dispatch({type:types.SET_SELECTED_PRODUCT, payload: product})
-    console.log("product",product)
+    // 아이템 수정다이얼로그 열어주기   
+    setMode("edit")    
+    dispatch({type:types.SET_SELECTED_PRODUCT, payload: product})    
     setShowDialog(true)
-
   };
 
 
@@ -81,8 +73,7 @@ useEffect(() => {
     setShowDialog(true)
   };
 
-  const handlePageClick = ({ selected }) => {
-    console.log("selected",selected)
+  const handlePageClick = ({ selected }) => {   
     //  쿼리에 페이지값 바꿔주기
     setSearchQuery({...searchQuery, page: selected +1})
   };

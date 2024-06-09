@@ -4,14 +4,10 @@ import { commonUiActions } from "../action/commonUiAction";
 const addToCart =
   ({ id, size }) =>
   async (dispatch) => {
-    try{
-      console.log("dispatch addTocart")
+    try{      
       dispatch({type: types.ADD_TO_CART_REQUEST})
-
-      const response = await api.post("/cart",{productId: id, size, qty: 1})
-      console.log("addToCart response",response)
-      if (response.status !==200)throw new Error(response.error);
-      
+      const response = await api.post("/cart",{productId: id, size, qty: 1})      
+      if (response.status !==200)throw new Error(response.error);      
       dispatch({type: types.ADD_TO_CART_SUCCESS, payload:response.data.cartItemQty})
       commonUiActions.showToastMessage("Item has been added to the cart.", "success")
     }catch(error){
@@ -25,7 +21,6 @@ const getCartList = () => async (dispatch) => {
     dispatch({type:types.GET_CART_LIST_REQUEST})
     const response = await api.get("/cart")
     if(response.status !== 200)throw new Error(response.error)
-    console.log("getCart response",response)
     dispatch({type:types.GET_CART_LIST_SUCCESS, payload:response.data.data})
   }catch(error){
     dispatch({type:types.GET_CART_LIST_FAIL, payload:error.error})
@@ -71,7 +66,6 @@ const getCartQty = () => async (dispatch) => {
     dispatch({ type: types.GET_CART_QTY_REQUEST });
     const response = await api.get("/cart/qty");
     if (response.status !== 200) throw new Error(response.error);
-    console.log("getCartQty", response)
     dispatch({ type: types.GET_CART_QTY_SUCCESS, payload: response.data.qty });
   } catch (error) {
     dispatch({ type: types.GET_CART_QTY_FAIL, payload: error });

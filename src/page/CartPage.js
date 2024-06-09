@@ -9,13 +9,11 @@ import "../style/cart.style.css";
 
 const CartPage = () => {
   const dispatch = useDispatch();
-  const {cartList, totalPrice} = useSelector((state)=>state.cart)
-  console.log("cartList",cartList)
+  const {cartList, totalPrice} = useSelector((state)=>state.cart)  
   useEffect(() => {
     //카트리스트 불러오기
     dispatch(cartActions.getCartList())
-  }, []);
-  console.log("totalPrice",totalPrice)
+  }, []);  
   return (
     <Container>
       <Row>

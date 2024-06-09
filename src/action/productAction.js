@@ -16,10 +16,8 @@ const getProductList = (query) => async (dispatch) => {
 };
 const getProductDetail = (id) => async (dispatch) => {
   try {
-    console.log("id at getProductDeatil", id)
     dispatch({ type: types.GET_PRODUCT_DETAIL_REQUEST });   
     const response = await api.get(`/product/${id}`);
-    console.log("rrr",response)
     if (response.status !== 200) throw new Error(response.error);
     dispatch({ type: types.GET_PRODUCT_DETAIL_SUCCESS, payload: response.data });
   } catch (error) {
@@ -43,11 +41,10 @@ const createProduct = (formData) => async (dispatch) => {
 };
 const deleteProduct = (id) => async (dispatch) => {
   try {
-    console.log("delete product")
+    
     dispatch({ type: types.PRODUCT_DELETE_REQUEST });
     const response = await api.delete(`/product/${id}`);
-    dispatch({ type: types.PRODUCT_DELETE_SUCCESS, payload: response.data });
-    console.log("Delete response:", response);
+    dispatch({ type: types.PRODUCT_DELETE_SUCCESS, payload: response.data });    
     dispatch(commonUiActions.showToastMessage("Product deleted successfully", "success"));
     dispatch(getProductList({page: 1, name: ""}))
   } catch (error) {

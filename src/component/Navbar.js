@@ -24,7 +24,7 @@ const Navbar = ({ user }) => {
             event.target.value = "";         
         }
     };
-    console.log("cartItemCount",cartItemQty);
+    
 
     const logout = () => {
         dispatch(userActions.logout());

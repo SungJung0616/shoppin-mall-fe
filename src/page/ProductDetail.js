@@ -26,8 +26,6 @@ const ProductDetail = () => {
     dispatch(productActions.getProductDetail(id));
   }, [dispatch, id]);
 
-  console.log("Product detail:", product);
-
   const addItemToCart = () => {
     if (!selectedStock) {
       setStockError(true);
@@ -35,8 +33,7 @@ const ProductDetail = () => {
     }
     // 로그인이 되어 있지 않은 경우 로그인 페이지로 이동
     if(!user) navigate("/login");
-    // 카트에 아이템 추가하기
-    console.log("selectedSize",selectedStock)  
+    // 카트에 아이템 추가하기     
     dispatch(cartActions.addToCart({ id, size: selectedStock }));
   };
 

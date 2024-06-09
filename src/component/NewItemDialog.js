@@ -31,7 +31,6 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
   const handleClose = () => {
     //모든걸 초기화시키고;
     // 다이얼로그 닫아주기
-    console.log("click")
     setFormData({ ...InitialFormData });
     setStock([]);
     setStockError(false);
@@ -41,7 +40,6 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("formdata",formData)
     //재고를 입력했는지 확인, 아니면 에러
     if(stock.length === 0)return setStockError(true);
 
@@ -113,13 +111,12 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
   };
 
   const uploadImage = (url) => {
-    //이미지 업로드
-    console.log(url)
+    //이미지 업로드    
     setFormData({...formData,image: url})
-    console.log(formData)
+   
   };
 
-  console.log("selectedProduct",selectedProduct)
+  
 
   useEffect(() => {
     if (showDialog) {
