@@ -8,7 +8,7 @@ import { userActions } from "../action/userAction";
 
 const Navbar = ({ user }) => {
     const dispatch = useDispatch();
-    const { cartItemCount } = useSelector((state) => state.cart);
+    const { cartItemQty } = useSelector((state) => state.cart);
     const isMobile = window.navigator.userAgent.indexOf("Mobile") !== -1;
     const [showSearchBox, setShowSearchBox] = useState(false);
     const menuList = ["여성", "Divided", "남성", "신생아/유아", "아동", "H&M HOME", "Sale", "지속가능성"];
@@ -24,6 +24,7 @@ const Navbar = ({ user }) => {
             event.target.value = "";         
         }
     };
+    console.log("cartItemCount",cartItemQty);
 
     const logout = () => {
         dispatch(userActions.logout());
@@ -78,7 +79,7 @@ const Navbar = ({ user }) => {
                         )}
                         <div onClick={() => navigate("/cart")} className="nav-icon">
                             <FontAwesomeIcon icon={faShoppingBag} />
-                            {!isMobile && <span style={{ cursor: "pointer" }}>{`쇼핑백(${cartItemCount || 0})`}</span>}
+                            {!isMobile && <span style={{ cursor: "pointer" }}>{`쇼핑백(${cartItemQty || 0})`}</span>}
                         </div>
                         <div onClick={() => navigate("/account/purchase")} className="nav-icon">
                             <FontAwesomeIcon icon={faBox} />
