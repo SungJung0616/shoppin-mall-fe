@@ -19,7 +19,7 @@ const InitialFormData = {
   price: 0,
 };
 const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
-  const selectedProduct = useSelector((state) => state.product.selectedProduct);
+  const {selectedProduct} = useSelector((state) => state.product);
   const { error } = useSelector((state) => state.product);
   const [formData, setFormData] = useState(
     mode === "new" ? { ...InitialFormData } : selectedProduct
@@ -119,10 +119,13 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
     console.log(formData)
   };
 
+  console.log("selectedProduct",selectedProduct)
+
   useEffect(() => {
     if (showDialog) {
       if (mode === "edit") {
         // 선택된 데이터값 불러오기 (재고 형태 객체에서 어레이로 바꾸기)
+        
         setFormData(selectedProduct)
 
         //{s:3, m:4}=> [[s,3],[m,4]]

@@ -4,11 +4,12 @@ const initialState = {
   error: "",
   productList: [],
   totalPageNumber: 1,
-  selectedProduct:null,
+  selectedProduct : null,
 };
 
 function productReducer(state = initialState, action) {
   const { type, payload } = action;
+  console.log("Reducer received action:", type);
   switch(type){
     case types.PRODUCT_CREATE_REQUEST:
     case types.PRODUCT_GET_REQUEST:
@@ -31,15 +32,16 @@ function productReducer(state = initialState, action) {
     case types.PRODUCT_DELETE_FAIL:
       return {...state, loading: false, error: payload}
 
-    case types.GET_PRODUCT_DETAIL_SUCCESS:
+    case types.GET_PRODUCT_DETAIL_SUCCESS:      
       return { ...state, loading: false, selectedProduct: payload };
-    case types.SET_SELECTED_PRODUCT:      
+      
+    case types.SET_SELECTED_PRODUCT:   
+    console.log('Selected Product Payload:', payload);    
       return {...state, loading: false, selectedProduct: payload}
     
     default:
       return state;
   }
-  
 }
 
 export default productReducer;

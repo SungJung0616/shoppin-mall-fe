@@ -64,8 +64,11 @@ useEffect(() => {
   const openEditForm = (product) => {
     //edit모드로 설정하고
     // 아이템 수정다이얼로그 열어주기
+    console.log("click")
     setMode("edit")
-    dispatch({type:types.SET_SELECTED_PRODUCT, payload:product})
+    console.log("Dispatching SET_SELECTED_PRODUCT action with payload:", product);
+    dispatch({type:types.SET_SELECTED_PRODUCT, payload: product})
+    console.log("product",product)
     setShowDialog(true)
 
   };
