@@ -15,10 +15,9 @@ const OrderReceipt = ({cartList, totalPrice}) => {
       <ul className="receipt-list">
         {cartList.length > 0 && 
         cartList.map((item)=> (
-        <li>
+        <li key={item._id}>
           <div className="display-flex space-between">
-            <div>{item.productId.name}</div>
-
+            <div>{item.productId.name}</div>            
             <div>{currencyFormat(item.productId.price * item.qty)}</div>
           </div>
         </li>

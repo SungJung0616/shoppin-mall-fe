@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Row, Col, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,6 +8,7 @@ import { currencyFormat } from "../utils/number";
 
 const CartProductCard = ({ item }) => {
   const dispatch = useDispatch();
+  const [quantity, setQuantity] = useState(item.qty);
 
   const handleQtyChange = (id, value) => {
     //아이템 수량을 수정한다
@@ -43,9 +44,10 @@ const CartProductCard = ({ item }) => {
             <strong>{currencyFormat(item.productId.price)}</strong>
           </div>
           <div>Size: {item.size.toUpperCase()}</div>
+          <div>Quantity: {item.qty}</div>
           <div>Total: {currencyFormat(item.productId.price * item.qty)}</div>
           <div>
-            Quantity:
+            수량선택:
             <Form.Select
               onChange={(event) => handleQtyChange(item._id, event.target.value)}
               required
