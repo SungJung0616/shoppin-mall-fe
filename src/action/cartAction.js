@@ -9,10 +9,14 @@ const addToCart =
       const response = await api.post("/cart",{productId: id, size, qty: 1})      
       if (response.status !==200)throw new Error(response.error);      
       dispatch({type: types.ADD_TO_CART_SUCCESS, payload:response.data.cartItemQty})
-      commonUiActions.showToastMessage("Item has been added to the cart.", "success")
+      dispatch(
+        commonUiActions.showToastMessage("Item has been added to the cart.", "success")
+      );
     }catch(error){
       dispatch({type:types.ADD_TO_CART_FAIL, payload: error.message})
-      commonUiActions.showToastMessage(error.message, "error")
+      dispatch(
+        commonUiActions.showToastMessage(error.message, "error")
+      );
     }
   };
 
@@ -37,6 +41,9 @@ const deleteCartItem = (id) => async (dispatch) => {
       type: types.DELETE_CART_ITEM_SUCCESS,
       payload: response.data.cartItemQty,
     });
+    dispatch(
+      commonUiActions.showToastMessage("Item has been deleted from cart.", "success")
+    );
     dispatch(getCartList());
   } catch (error) {
     dispatch({ type: types.DELETE_CART_ITEM_FAIL, payload: error });

@@ -35,6 +35,7 @@ const ProductDetail = () => {
     if(!user) navigate("/login");
     // 카트에 아이템 추가하기     
     dispatch(cartActions.addToCart({ id, size: selectedStock }));
+    
   };
 
   const selectStock = (value) => {
