@@ -13,3 +13,23 @@
     align-items: center;
     max-width: 550px;
   }
+
+  .social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .icon {
+    font-size: 40px; 
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .icon:hover {
+    color: #007bff;
+  }
+
+  .test-id{
+    margin-bottom: 10px;
+  }

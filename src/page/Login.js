@@ -3,7 +3,8 @@ import { Container, Form, Button, Alert, Spinner  } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../action/userAction";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGoogle, faFacebook, faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import "../style/login.style.css";
 
 const Login = () => {
@@ -69,18 +70,33 @@ const Login = () => {
                 onChange={(event) => setPassword(event.target.value)}
               />
             </Form.Group>
-            <div>ID : admin@gmail.com / PW : 123</div>
+            <div className="test-id">Test ID : admin@gmail.com / Test PW : 123</div>
             <div className="display-space-between login-button-area">
               <Button variant="danger" type="submit">
                 Login
               </Button>
+              
               <div>
-                아직 계정이 없으세요?<Link to="/register">회원가입 하기</Link>{" "}
+                Don't have an account?<Link to="/register"> Sign up</Link>{" "}
               </div>
             </div>
 
             <div className="text-align-center mt-2">
-              <p>-외부 계정으로 로그인하기-</p>
+              <p>-Login with external accounts-</p>
+              <div className="social-icons">
+              <a href="#" className="icon">
+                <FontAwesomeIcon icon={faGoogle} />
+              </a>
+              <a href="#" className="icon">
+                <FontAwesomeIcon icon={faFacebook} />
+              </a>
+              <a href="#" className="icon">
+                <FontAwesomeIcon icon={faGithub} />
+              </a>
+              <a href="#" className="icon">
+                <FontAwesomeIcon icon={faLinkedin} />
+              </a>
+            </div>
               <div className="display-center"></div>
             </div>
           </Form>
