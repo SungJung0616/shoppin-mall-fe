@@ -6,6 +6,8 @@ import { userActions } from "../action/userAction";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faFacebook, faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import "../style/login.style.css";
+import { GoogleLogin } from '@react-oauth/google';
+import { hasGrantedAllScopesGoogle } from "@react-oauth/google";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -22,6 +24,9 @@ const Login = () => {
 
   const handleGoogleLogin = async (googleData) => {
     // 구글로 로그인 하기
+    console.log("googleData",googleData)
+    dispatch(userActions.loginWithGoogle(googleData.credential));
+    console.log("user", user)
   };
 
   useEffect(() => {
@@ -84,6 +89,14 @@ const Login = () => {
             <div className="text-align-center mt-2">
               <p>-Login with external accounts-</p>
               <div className="social-icons">
+
+              <GoogleLogin
+                onSuccess={handleGoogleLogin}
+                onError={() => {
+                console.log('Login Failed');
+                 }}
+              />;
+
               <a href="#" className="icon">
                 <FontAwesomeIcon icon={faGoogle} />
               </a>
