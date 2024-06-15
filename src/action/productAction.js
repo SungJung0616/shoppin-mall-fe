@@ -4,16 +4,16 @@ import { toast } from "react-toastify";
 import { commonUiActions } from "./commonUiAction";
 
 const getProductList = (query) => async (dispatch) => {
-  try{
+  try{    
     dispatch({type:types.PRODUCT_GET_REQUEST})
     const response = await api.get("/product", { params: {...query }});
     if(response.status !== 200)throw new Error(response.error);
-    dispatch({type:types.PRODUCT_GET_SUCCESS, payload : response.data})
-    
+    dispatch({type:types.PRODUCT_GET_SUCCESS, payload : response.data})    
   }catch(error){
     dispatch({type:types.PRODUCT_GET_FAIL, payload: error.response})
   }
 };
+
 const getProductDetail = (id) => async (dispatch) => {
   try {
     dispatch({ type: types.GET_PRODUCT_DETAIL_REQUEST });   
@@ -68,10 +68,34 @@ const editProduct = (formData, id) => async (dispatch) => {
   }
 };
 
+const getNewProducts = () => async (dispatch) => {
+  try {
+    dispatch({ type: types.PRODUCT_GET_NEW_REQUEST });
+    const response = await api.get("/product/new");
+    if (response.status !== 200) throw new Error(response.error);
+    dispatch({ type: types.PRODUCT_GET_NEW_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: types.PRODUCT_GET_NEW_FAIL, payload: error.message });
+  }
+};
+
+const getSaleProducts = () => async (dispatch) => {
+  try {
+    dispatch({ type: types.PRODUCT_GET_SALE_REQUEST });
+    const response = await api.get("/product/sale");
+    if (response.status !== 200) throw new Error(response.error);
+    dispatch({ type: types.PRODUCT_GET_SALE_SUCCESS, payload: response.data });
+  } catch (error) {
+    dispatch({ type: types.PRODUCT_GET_SALE_FAIL, payload: error.message });
+  }
+};
+
 export const productActions = {
   getProductList,
   createProduct,
   deleteProduct,
   editProduct,
   getProductDetail,
+  getNewProducts,
+  getSaleProducts,
 };

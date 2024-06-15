@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { cartActions } from "../action/cartAction";
 import { currencyFormat } from "../utils/number";
 
-const CartProductCard = ({ item }) => {
+const CartProductCard = ({ item }) => {  
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(item.qty);
 
@@ -18,6 +18,9 @@ const CartProductCard = ({ item }) => {
   const deleteCart = (id) => {
     dispatch(cartActions.deleteCartItem(id));
   };
+
+  const isOnSale = item.productId.category.includes("sale");
+  const discounted = isOnSale?item.productId.price * 0.8 : item.productId.price;
 
   return (
     <div className="product-card-cart">
@@ -40,12 +43,16 @@ const CartProductCard = ({ item }) => {
             </button>
           </div>
 
-          <div>
-            <strong>{currencyFormat(item.productId.price)}</strong>
-          </div>
+          {isOnSale ? (
+            <div className="price-info">
+               <span className="discounted-price">{currencyFormat(discounted)}</span>
+            </div>
+          ) : (
+            <div className="product-info">{currencyFormat(item.productId.price)}</div>
+          )}
           <div>Size: {item.size.toUpperCase()}</div>
           <div>Quantity: {item.qty}</div>
-          <div>Total: {currencyFormat(item.productId.price * item.qty)}</div>
+          <div>Total: {currencyFormat(discounted * item.qty)}</div>
           <div>
             수량선택:
             <Form.Select

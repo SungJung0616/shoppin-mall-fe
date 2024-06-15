@@ -8,7 +8,6 @@ import OrderTable from "../component/OrderTable";
 import * as types from "../constants/order.constants";
 import ReactPaginate from "react-paginate";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { commonUiActions } from "../action/commonUiAction";
 
 const AdminOrderPage = () => {
   const navigate = useNavigate();
@@ -18,6 +17,8 @@ const AdminOrderPage = () => {
   const [searchQuery, setSearchQuery] = useState({
     page: query.get("page") || 1,
     ordernum: query.get("ordernum") || "",
+    sortBy: query.get("sortBy") || "createdAt",
+    sortOrder: query.get("sortOrder") || "desc",
   });
   const error = useSelector((state) => state.order.error);
   const [open, setOpen] = useState(false);
@@ -32,9 +33,8 @@ const AdminOrderPage = () => {
     "Total Price",
     "Status",
   ];
-  
+
   useEffect(() => {
-    console.log("orderAction get orderList")
     dispatch(orderActions.getOrderList({ ...searchQuery }));
   }, [query]);
 
@@ -44,7 +44,6 @@ const AdminOrderPage = () => {
     }
     const params = new URLSearchParams(searchQuery);
     const queryString = params.toString();
-
     navigate("?" + queryString);
   }, [searchQuery]);
 
@@ -59,6 +58,14 @@ const AdminOrderPage = () => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleSort = (sortBy) => {
+    const sortOrder =
+      searchQuery.sortBy === sortBy && searchQuery.sortOrder === "asc"
+        ? "desc"
+        : "asc";
+    setSearchQuery({ ...searchQuery, sortBy, sortOrder });
   };
 
   return (
@@ -77,6 +84,9 @@ const AdminOrderPage = () => {
           header={tableHeader}
           data={orderList}
           openEditForm={openEditForm}
+          handleSort={handleSort}
+          sortBy={searchQuery.sortBy}
+          sortOrder={searchQuery.sortOrder}
         />
         <ReactPaginate
           nextLabel="next >"

@@ -4,25 +4,38 @@ import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 import { currencyFormat } from "../utils/number";
 
-const OrderReceipt = ({cartList, totalPrice}) => {
+const OrderReceipt = ({ cartList }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const calculateTotalPrice = () => {
+    return cartList.reduce((total, item) => {
+      const isOnSale = item.productId.category.includes("sale");
+      const price = isOnSale ? item.productId.price * 0.8 : item.productId.price;
+      return total + price * item.qty;
+    }, 0);
+  };
+
+  const totalPrice = calculateTotalPrice();
+
   return (
-    
     <div className="receipt-container">
       <h3 className="receipt-title">주문 내역</h3>
       <ul className="receipt-list">
-        {cartList.length > 0 && 
-        cartList.map((item)=> (
-        <li key={item._id}>
-          <div className="display-flex space-between">
-            <div>{item.productId.name}</div>            
-            <div>{currencyFormat(item.productId.price * item.qty)}</div>
-          </div>
-        </li>
-      ))}
-        
+        {cartList.length > 0 &&
+          cartList.map((item) => {
+            const isOnSale = item.productId.category.includes("sale");
+            const price = isOnSale ? item.productId.price * 0.8 : item.productId.price;
+
+            return (
+              <li key={item._id}>
+                <div className="display-flex space-between">
+                  <div>{item.productId.name}</div>
+                  <div>{currencyFormat(price * item.qty)}</div>
+                </div>
+              </li>
+            );
+          })}
       </ul>
       <div className="display-flex space-between receipt-title">
         <div>

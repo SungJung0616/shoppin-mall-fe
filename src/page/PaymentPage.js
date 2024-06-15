@@ -1,18 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import OrderReceipt from "../component/OrderReceipt";
 import PaymentForm from "../component/PaymentForm";
 import "../style/paymentPage.style.css";
 import { useSelector, useDispatch } from "react-redux";
 import { orderActions } from "../action/orderAction";
-import { useEffect } from "react";
 import { useNavigate } from "react-router";
-import { commonUiActions } from "../action/commonUiAction";
 import { cc_expires_format } from "../utils/number";
-import { car } from "@cloudinary/url-gen/qualifiers/focusOn";
 
 const PaymentPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const user = useSelector((state) => state.user.user);
+  const { cartList, totalPrice } = useSelector((state) => state.cart);
 
   const [cardValue, setCardValue] = useState({
     cvc: "",
@@ -21,8 +22,7 @@ const PaymentPage = () => {
     name: "",
     number: "",
   });
-  const navigate = useNavigate();
-  const [firstLoading, setFirstLoading] = useState(true);
+
   const [shipInfo, setShipInfo] = useState({
     firstName: "",
     lastName: "",
@@ -31,55 +31,73 @@ const PaymentPage = () => {
     city: "",
     zip: "",
   });
-  const {cartList, totalPrice} = useSelector(state=>state.cart)
 
-  //맨처음 페이지 로딩할때는 넘어가고  오더번호를 받으면 성공페이지로 넘어가기
+  const [useUserInfo, setUseUserInfo] = useState(false);
+
+  useEffect(() => {
+    if (useUserInfo && user) {
+      setShipInfo({
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
+        contact: user.contact || "",
+        address: user.address || "",
+        city: user.city || "",
+        zip: user.zip || "",
+      });
+    } else {
+      setShipInfo({
+        firstName: "",
+        lastName: "",
+        contact: "",
+        address: "",
+        city: "",
+        zip: "",
+      });
+    }
+  }, [useUserInfo, user]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    //오더 생성하가ㅣ
-    const {firstName, lastName, contact, address, city, zip} = shipInfo;
-    const data = { 
-      totalPrice, 
-      shipTo : {address, city, zip},
-      contact : {firstName, lastName, contact},
-      orderList : cartList.map(item=>{
-        return{
-          productId : item.productId._id,
-          price : item.productId.price,
+    const { firstName, lastName, contact, address, city, zip } = shipInfo;
+    const data = {
+      totalPrice,
+      shipTo: { address, city, zip },
+      contact: { firstName, lastName, contact },
+      orderList: cartList.map((item) => {
+        const isOnSale = item.productId.category.includes("sale");
+        const price = isOnSale ? item.productId.price * 0.8 : item.productId.price;
+        return {
+          productId: item.productId._id,
+          price: price,
           qty: item.qty,
-          size: item.size
+          size: item.size,
         };
-      })
-    }
-        dispatch(orderActions.createOrder(data,navigate))
-
+      }),
+    };
+    dispatch(orderActions.createOrder(data, navigate));
   };
 
   const handleFormChange = (event) => {
-    //shipInfo에 값 넣어주기
-    const {name, value} = event.target;
-    setShipInfo({...shipInfo, [name] : value})
+    const { name, value } = event.target;
+    setShipInfo({ ...shipInfo, [name]: value });
   };
 
   const handlePaymentInfoChange = (event) => {
-    //카드정보 넣어주기
-    const {name, value} = event.target;
-    if(name==="expiry"){
-      let newValue = cc_expires_format(value)
-      setCardValue({...cardValue, [name] : newValue})
+    const { name, value } = event.target;
+    if (name === "expiry") {
+      let newValue = cc_expires_format(value);
+      setCardValue({ ...cardValue, [name]: newValue });
       return;
     }
-
-    setCardValue({...cardValue, [name] : value})
+    setCardValue({ ...cardValue, [name]: value });
   };
 
   const handleInputFocus = (e) => {
     setCardValue({ ...cardValue, focus: e.target.name });
   };
-  //카트에 아이템이 없다면 다시 카트페이지로 돌아가기 (결제할 아이템이 없으니 결제페이지로 가면 안됌)
-  if(cartList.length === 0){
-    navigate("/cart")
+
+  if (cartList.length === 0) {
+    navigate("/cart");
   }
 
   return (
@@ -88,6 +106,12 @@ const PaymentPage = () => {
         <Col lg={7}>
           <div>
             <h2 className="mb-2">배송 주소</h2>
+            <Form.Check 
+              type="checkbox" 
+              label="유저 정보로 채우기" 
+              checked={useUserInfo} 
+              onChange={(e) => setUseUserInfo(e.target.checked)} 
+            />
             <div>
               <Form onSubmit={handleSubmit}>
                 <Row className="mb-3">
@@ -98,6 +122,7 @@ const PaymentPage = () => {
                       onChange={handleFormChange}
                       required
                       name="lastName"
+                      value={shipInfo.lastName}
                     />
                   </Form.Group>
 
@@ -108,6 +133,7 @@ const PaymentPage = () => {
                       onChange={handleFormChange}
                       required
                       name="firstName"
+                      value={shipInfo.firstName}
                     />
                   </Form.Group>
                 </Row>
@@ -119,6 +145,7 @@ const PaymentPage = () => {
                     onChange={handleFormChange}
                     required
                     name="contact"
+                    value={shipInfo.contact}
                   />
                 </Form.Group>
 
@@ -129,6 +156,7 @@ const PaymentPage = () => {
                     onChange={handleFormChange}
                     required
                     name="address"
+                    value={shipInfo.address}
                   />
                 </Form.Group>
 
@@ -139,6 +167,7 @@ const PaymentPage = () => {
                       onChange={handleFormChange}
                       required
                       name="city"
+                      value={shipInfo.city}
                     />
                   </Form.Group>
 
@@ -148,30 +177,33 @@ const PaymentPage = () => {
                       onChange={handleFormChange}
                       required
                       name="zip"
+                      value={shipInfo.zip}
                     />
                   </Form.Group>
                 </Row>
                 <div className="mobile-receipt-area">
-                  <OrderReceipt cartList={cartList} totalPrice={totalPrice}/>
+                  <OrderReceipt cartList={cartList} />
                 </div>
                 <div>
                   <h2 className="payment-title">결제 정보</h2>
                   <PaymentForm cardValue={cardValue} handleInputFocus={handleInputFocus} handlePaymentInfoChange={handlePaymentInfoChange} />
                 </div>
 
-                { cartList.length > 0 && (<Button
-                  variant="dark"
-                  className="payment-button pay-button"
-                  type="submit"
-                >
-                  결제하기
-                </Button>)}
+                {cartList.length > 0 && (
+                  <Button
+                    variant="dark"
+                    className="payment-button pay-button"
+                    type="submit"
+                  >
+                    결제하기
+                  </Button>
+                )}
               </Form>
             </div>
           </div>
         </Col>
         <Col lg={5} className="receipt-area">
-          <OrderReceipt cartList={cartList} totalPrice={totalPrice} />
+          <OrderReceipt cartList={cartList} />
         </Col>
       </Row>
     </Container>

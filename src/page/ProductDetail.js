@@ -31,9 +31,9 @@ const ProductDetail = () => {
       setStockError(true);
       return;
     }
-    // 로그인이 되어 있지 않은 경우 로그인 페이지로 이동
+    
     if(!user) navigate("/login");
-    // 카트에 아이템 추가하기     
+         
     dispatch(cartActions.addToCart({ id, size: selectedStock }));
     
   };
@@ -55,6 +55,9 @@ const ProductDetail = () => {
     return <div>Loading...</div>;
   }
 
+  const isOnSale = product.data.category.includes("sale"); 
+  const discountedPrice = isOnSale ? product.data.price * 0.8 : product.data.price;
+
   return (
     <Container className="product-detail-card">
       <Row>
@@ -66,8 +69,14 @@ const ProductDetail = () => {
           />
         </Col>
         <Col className="product-info-area" sm={6}>
-          <div className="product-info">{product?.data.name}</div>
-          <div className="product-info">{currencyFormat(product?.data.price)}</div>
+        {isOnSale ? (
+            <div className="price-info">
+              <span className="original-price">{currencyFormat(product.data.price)}</span>
+              <span className="discounted-price">{currencyFormat(discountedPrice)}</span>
+            </div>
+          ) : (
+            <div className="product-info">{currencyFormat(product?.data.price)}</div>
+          )}
           <div className="product-info">{product?.data.description}</div>
 
           <Dropdown

@@ -6,12 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { orderActions } from "../action/orderAction";
 import OrderStatusCard from "../component/OrderStatusCard";
 import "../style/orderStatus.style.css";
+import { useNavigate } from "react-router";
 
 const MyPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { orderList, totalPageNum  } = useSelector((state) => state.order);
   const [currentPage, setCurrentPage] = useState(1);
+  const {user} = useSelector(state=>state.user)
 
+  if(!user) navigate("/login");
   //오더리스트 들고오기
   useEffect(() => {
     dispatch(orderActions.getOrder());
@@ -20,9 +24,7 @@ const MyPage = () => {
 
   const handlePageChange = (data) => {
     setCurrentPage(data.selected + 1);
-  };
-
-  console.log("orderList",orderList)
+  }; 
 
   // 오더리스트가 없다면? 주문한 상품이 없습니다 메세지 보여주기
   if (orderList?.length === 0) {

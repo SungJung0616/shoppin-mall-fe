@@ -15,10 +15,16 @@ const Sidebar = () => {
     return (
       <div>
         <Link to="/">
-          <img width={100} src="/image/image2.png" alt="sj-logo.png" />
+          <img width={100} src="/image/img.png" alt="sj-logo.png" />
         </Link>
         <div className="sidebar-item">Admin Account</div>
         <ul className="sidebar-area">
+          <li
+            className="sidebar-item"
+            onClick={() => handleSelectMenu("/admin/user?page=1")}
+          >
+            user
+          </li>
           <li
             className="sidebar-item"
             onClick={() => handleSelectMenu("/admin/product?page=1")}

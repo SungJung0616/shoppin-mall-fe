@@ -42,9 +42,6 @@ const loginWithGoogle = (token) => async (dispatch) => {
     if(response.status !==200) throw new Error(response.error)
     dispatch({type:types.GOOGLE_LOGIN_SUCCESS, payload: response.data})
 
-
-
-
   }catch(error){
     dispatch({type:types.GOOGLE_LOGIN_FAIL, payload: error.error});
     dispatch(commonUiActions.showToastMessage(error.error, "error"));
@@ -74,11 +71,50 @@ const registerUser =
     dispatch({ type: types.CLEAR_ERROR })
   };
 
+  const updateUser = (userData) => async (dispatch) => {
+    try {      
+      dispatch({ type: types.UPDATE_USER_REQUEST });
+      const response = await api.put("/user/me", userData);
+      
+      if (response.status !== 200) throw new Error(response.error);
+      dispatch({ type: types.UPDATE_USER_SUCCESS, payload: response.data });
+      dispatch(commonUiActions.showToastMessage("Profile updated successfully", "success"));
+    } catch (error) {
+      dispatch({ type: types.UPDATE_USER_FAIL, payload: error.response?.data?.message || error.message });
+    }
+  };
+
+
+  const getUserList = (query) => async (dispatch) => {
+    try {
+      dispatch({ type: types.USER_GET_REQUEST });
+      const response = await api.get("/users", { params: { ...query } });
+      if (response.status !== 200) throw new Error(response.data.error);
+      dispatch({ type: types.USER_GET_SUCCESS, payload: response.data });
+    } catch (error) {
+      dispatch({ type: types.USER_GET_FAIL, payload: error.message });
+    }
+  };
+
+  const updateUserLevel = (userId, level) => async (dispatch) => {
+    try {
+      dispatch({ type: types.USER_UPDATE_REQUEST });
+      const response = await api.put("/users", { userId, level });
+      if (response.status !== 200) throw new Error(response.data.error);
+      dispatch({ type: types.USER_UPDATE_SUCCESS, payload: response.data });
+    } catch (error) {
+      dispatch({ type: types.USER_UPDATE_FAIL, payload: error.message });
+    }
+  };
+
 export const userActions = {
   loginWithToken,
   loginWithEmail,
   logout,
   loginWithGoogle,
   registerUser,
-  clearError
+  clearError,
+  updateUser,
+  getUserList,
+  updateUserLevel,
 };

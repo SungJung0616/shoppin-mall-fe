@@ -7,6 +7,7 @@ import ToastMessage from "../component/ToastMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../action/userAction";
 import { cartActions } from "../action/cartAction";
+import Footer from "../component/Footer";
 import { commonUiActions } from "../action/commonUiAction";
 
 const AppLayout = ({ children }) => {
@@ -41,6 +42,7 @@ const AppLayout = ({ children }) => {
           {children}
         </>
       )}
+      <Footer />
     </div>
   );
 };

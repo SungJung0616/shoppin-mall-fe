@@ -4,8 +4,6 @@ import { badgeBg } from "../constants/order.constants";
 import { currencyFormat } from "../utils/number";
 
 const OrderStatusCard = ({ orderItem }) => {
-  console.log("orderItem",orderItem)
-
   const orderNum = orderItem.orderNum || "N/A";
   const createdAt = orderItem.createdAt ? orderItem.createdAt.slice(0, 10) : "N/A";
   const productName = orderItem.items?.[0]?.productId?.name || "Unknown product";

@@ -51,6 +51,10 @@ function cartReducer(state = initialState, action) {
     case types.UPDATE_CART_ITEM_FAIL:
     case types.GET_CART_QTY_FAIL:
       return {...state, loading: false, error: payload};
+
+    case types.CLEAR_CART:
+      return { ...state, cartItemQty: 0, cartList: [], totalPrice: 0 };
+      
     default:
       return state;
   }

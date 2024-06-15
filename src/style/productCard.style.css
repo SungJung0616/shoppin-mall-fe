@@ -37,4 +37,15 @@
     width: 100%;
     background-color: rgba(0, 0, 0, 0.5);
   }
+
+  .original-price {
+    text-decoration: line-through;
+    color: gray;
+    margin-right: 10px;
+  }
+  
+  .discounted-price {
+    color: red;
+    font-weight: bold;
+  }
   

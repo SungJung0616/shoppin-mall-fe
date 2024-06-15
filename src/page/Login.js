@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect,useRef  } from "react";
 import { Container, Form, Button, Alert, Spinner  } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faFacebook, faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import "../style/login.style.css";
 import { GoogleLogin } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
 import { hasGrantedAllScopesGoogle } from "@react-oauth/google";
 
 const Login = () => {
@@ -22,12 +23,12 @@ const Login = () => {
     dispatch(userActions.loginWithEmail({ email, password }));
   };
 
-  const handleGoogleLogin = async (googleData) => {
-    // 구글로 로그인 하기
-    console.log("googleData",googleData)
-    dispatch(userActions.loginWithGoogle(googleData.credential));
-    console.log("user", user)
-  };
+  const handleGoogleLoginSuccess = async (credentialResponse) => {
+   
+    const idToken = credentialResponse.credential; 
+    
+    dispatch(userActions.loginWithGoogle(idToken));   
+   };   
 
   useEffect(() => {
     if (user) {
@@ -90,15 +91,18 @@ const Login = () => {
               <p>-Login with external accounts-</p>
               <div className="social-icons">
 
-              <GoogleLogin
-                onSuccess={handleGoogleLogin}
-                onError={() => {
-                console.log('Login Failed');
-                 }}
-              />;
+              <div >
+                  <GoogleLogin
+                    onSuccess={handleGoogleLoginSuccess}
+                    onError={() => {
+                      console.log('Login Failed');
+                    }}
+                    
+                  />
+                </div>
 
-              <a href="#" className="icon">
-                <FontAwesomeIcon icon={faGoogle} />
+              {/* <a href="#" className="icon">
+                <FontAwesomeIcon icon={faGoogle} onClick={() => googleLogin()}/>
               </a>
               <a href="#" className="icon">
                 <FontAwesomeIcon icon={faFacebook} />
@@ -108,7 +112,7 @@ const Login = () => {
               </a>
               <a href="#" className="icon">
                 <FontAwesomeIcon icon={faLinkedin} />
-              </a>
+              </a> */}
             </div>
               <div className="display-center"></div>
             </div>

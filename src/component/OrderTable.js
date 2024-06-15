@@ -2,22 +2,25 @@ import React from "react";
 import { Table, Badge } from "react-bootstrap";
 import { badgeBg } from "../constants/order.constants";
 import { currencyFormat } from "../utils/number";
-const OrderTable = ({ header, data, openEditForm }) => {
+
+const OrderTable = ({ header, data, openEditForm, handleSort, sortBy, sortOrder }) => {
   return (
     <div className="overflow-x">
       <Table striped bordered hover>
         <thead>
           <tr>
-            {header.map((title) => (
-              <th>{title}</th>
+            {header.map((title, index) => (
+              <th key={index} onClick={() => handleSort(title.toLowerCase().replace(/ /g, ""))}>
+                {title} {sortBy === title.toLowerCase().replace(/ /g, "") ? (sortOrder === "asc" ? "↑" : "↓") : ""}
+              </th>
             ))}
           </tr>
         </thead>
         <tbody>
           {data.length > 0 ? (
             data.map((item, index) => (
-              <tr onClick={() => openEditForm(item)}>
-                <th>{index}</th>
+              <tr key={index} onClick={() => openEditForm(item)}>
+                <th>{index + 1}</th>
                 <th>{item.orderNum}</th>
                 <th>{item.createdAt.slice(0, 10)}</th>
                 <th>{item.userId.email}</th>
@@ -29,9 +32,7 @@ const OrderTable = ({ header, data, openEditForm }) => {
                 ) : (
                   <th></th>
                 )}
-
                 <th>{item.shipTo.address + " " + item.shipTo.city}</th>
-
                 <th>{currencyFormat(item.totalPrice)}</th>
                 <th>
                   <Badge bg={badgeBg[item.status]}>{item.status}</Badge>
@@ -39,11 +40,16 @@ const OrderTable = ({ header, data, openEditForm }) => {
               </tr>
             ))
           ) : (
-            <tr>No Data to show</tr>
+            <tr>
+              <td colSpan={header.length} className="text-center">
+                No Data to show
+              </td>
+            </tr>
           )}
         </tbody>
       </Table>
     </div>
   );
 };
+
 export default OrderTable;

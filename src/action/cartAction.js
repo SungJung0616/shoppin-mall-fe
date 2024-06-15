@@ -79,10 +79,16 @@ const getCartQty = () => async (dispatch) => {
     dispatch(commonUiActions.showToastMessage(error, "error"));
   }
 };
+
+const clearCart = () => ({
+  type: types.CLEAR_CART,
+});
+
 export const cartActions = {
   addToCart,
   getCartList,
   deleteCartItem,
   updateQty,
   getCartQty,
+  clearCart,
 };
