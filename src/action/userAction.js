@@ -86,9 +86,9 @@ const registerUser =
 
 
   const getUserList = (query) => async (dispatch) => {
-    try {
-      dispatch({ type: types.USER_GET_REQUEST });
-      const response = await api.get("/users", { params: { ...query } });
+    try {      
+      dispatch({ type: types.USER_GET_REQUEST });      
+      const response = await api.get("/auth/users", { params: { ...query } });      
       if (response.status !== 200) throw new Error(response.data.error);
       dispatch({ type: types.USER_GET_SUCCESS, payload: response.data });
     } catch (error) {
