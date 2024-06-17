@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { FaInstagram, FaFacebook, FaTwitter } from "react-icons/fa";
-import "./footer.style.css"; // 스타일 파일을 따로 관리
+import "./footer.style.css"; 
 
 const Footer = () => {
   return (
@@ -21,6 +21,9 @@ const Footer = () => {
                 <FaTwitter />
               </a>
             </div>
+            <p className="study-project-note">
+              * This site is for a personal project for study purposes only and is non-commercial. *
+            </p>
           </Col>
         </Row>
       </Container>

@@ -12,7 +12,6 @@ const AdminUserPage = () => {
   const [query, setQuery] = useSearchParams();
   const dispatch = useDispatch();
   const userList = useSelector((state) => state.user.userList);
-  console.log("userList",userList)
   const [searchQuery, setSearchQuery] = useState({
     page: query.get("page") || 1,
     name: query.get("name") || "",
@@ -21,8 +20,7 @@ const AdminUserPage = () => {
   const totalPageNum = useSelector((state) => state.user.totalPageNum);
   const tableHeader = ["#", "Email", "Activity Name", "First Name", "Last Name", "Level"];
 
-  useEffect(() => {
-    console.log("getUserList")
+  useEffect(() => {    
     dispatch(userActions.getUserList({ ...searchQuery }));
   }, [query]);
 
