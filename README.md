@@ -1,39 +1,44 @@
-# 🍴 풍부해진 쇼핑몰 SJ
+# 🛍️ Enhanced Shopping Mall SJ
 
-![image]('./public/image/mainpage.png')
-SJ 는 사용자가 다양한 옷을 간편하게 구매할 수 있는 웹사이트입니다.
+![Main Page](./public/image/mainpage.png)
+SJ is a website where users can conveniently purchase a variety of clothes.
 
-### 개발 기간
+### Development Period
 
-- 전체 개발 기간: 2024-05-15 ~ 2024-06-16
-- 백앤드 구현: 2022-06-03 ~ 2022-06-08
-- 프론트앤드 및 기능 구현: 2022-06-06 ~ 2022-06-16
+- Total Development Period: 2024-05-15 to 2024-06-16
+- Backend Implementation: 2024-06-03 to 2024-06-08
+- Frontend and Feature Implementation: 2024-06-06 to 2024-06-16
 
-### 배포 주소
+### Deployment Links
 
-> <div>프론트 서버 : https://sj-shopping-mall.netlify.app/account/profile</div>
-> 백엔드 서버 : http://sj-shopping-mall.ap-southeast-2.elasticbeanstalk.com/
-> <br>
+<div>Frontend Server: <a href="https://sj-shopping-mall.netlify.app/account/profile">https://sj-shopping-mall.netlify.app/account/profile</a></div>
+<div>Backend Server: <a href="http://sj-shopping-mall.ap-southeast-2.elasticbeanstalk.com/">http://sj-shopping-mall.ap-southeast-2.elasticbeanstalk.com/</a></div>
+<br>
 
-### 테스트 계정
+### Test Account
 
-- **Test ID**: admin@gmail.com
-- **Test PW**: 123
+- <b>Test ID</b>: admin@gmail.com
+- <b>Test PW</b>: 123
 
-## 프로젝트 소개
+## Project Introduction
 
-**SJ**는 쇼핑몰을 구현해보려고 클론코딩을 한 프로젝트 입니다.
+<b>SJ</b> is a project where we implemented a shopping mall through clone coding.
 
-- 원하는 상품을 고를수 있도록 메인페이지를 구성했습니다.
-- 어드민 페이지를 통해서, 등록되어 있는 상품, 주문, 유저정보의 등록, 수정 및 삭제를 할수 있습니다.
-- 원하는 상품의 사이즈를 선택해서 결제까지 할수 있도록 했습니다.
+- We have designed the main page to allow users to choose their desired products.
+- The admin page allows the registration, modification, and deletion of products, orders, and user information.
+- Users can select the size of their desired product and proceed to checkout.
   <br>
 
 ## Developer
 
-| <img src="https://avatars.githubusercontent.com/u/35758170?v=4" width="150" height="150"/> |
-| :----------------------------------------------------------------------------------------: |
-|              Sung U Jung<br/>[@SungJung0616](https://github.com/SungJung0616)              |
+<table>
+  <tr>
+    <td><img src="https://avatars.githubusercontent.com/u/35758170?v=4" width="150" height="150"/></td>
+  </tr>
+  <tr>
+    <td style="text-align: center;">Sung U Jung<br/><a href="https://github.com/SungJung0616">@SungJung0616</a></td>
+  </tr>
+</table>
 
 <br>
 
@@ -42,13 +47,13 @@ SJ 는 사용자가 다양한 옷을 간편하게 구매할 수 있는 웹사이
 ## User Features
 
 1. **Sign Up**
-   ![image]('./public/image/signup.png')
+   ![Sign Up](./public/image/signup.png)
 
 2. **Login**
 
    - Email login
    - External account login
-     ![image]('./public/image/login.png')
+     ![Login](./public/image/login.png)
 
 3. **Shopping Mall Landing Page**
 
@@ -56,13 +61,13 @@ SJ 는 사용자가 다양한 옷을 간편하게 구매할 수 있는 웹사이
    - Logout button
    - Shopping bag button
    - My orders button
-     ![image]('./public/image/mainpage.png')
+     ![Landing Page](./public/image/mainpage.png)
 
 4. **Product Detail Page**
 
    - Add product to cart
    - Select product size
-     ![image]('./public/image/productDetail.png')
+     ![Product Detail](./public/image/productDetail.png)
 
 5. **Cart Page**
 
@@ -70,44 +75,45 @@ SJ 는 사용자가 다양한 옷을 간편하게 구매할 수 있는 웹사이
    - Modify item quantity
    - Delete items
    - Proceed to checkout
-     ![image]('./public/image/cartPage.png')
+     ![Cart Page](./public/image/cartPage.png)
 
 6. **Checkout Page**
 
    - Prevent checkout if stock is insufficient
-     ![image]('./public/image/payment.png')
+     ![Checkout Page](./public/image/payment.png)
 
 7. **Order Completion Page**
+
    - Display order number
    - View order details and status
-     ![image]('./public/image/orderPage.png')
+     ![Order Completion Page](./public/image/orderPage.png)
 
 ## Admin Page
 
 1. **Product List Page**
+
    - Add new products
    - Search products
    - Edit and delete product information
    - Pagination
-
-![image]('./public/image/adminProduct.png')
+     ![Admin Product List](./public/image/adminProduct.png)
 
 2. **Order Page**
 
    - View order details
    - Update order status
    - Search by order number
-     ![image]('./public/image/adminOrder.png')
+     ![Admin Order Page](./public/image/adminOrder.png)
 
 3. **User Page**
+
    - View user details
    - Update user level
-
-![image]('./public/image/adminUser.png')
+     ![Admin User Page](./public/image/adminUser.png)
 
 ## ERD
 
-![Database Schema](public/image/image.png)
+![Database Schema](./public/image/image.png)
 
 ## Implementation Plan
 
