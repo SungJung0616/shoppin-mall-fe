@@ -92,9 +92,9 @@ useEffect(() => {
             placeholder="제품 이름으로 검색"
             field="name"
           />
-           <Button className="mt-2 mb-2" onClick={handleShowAll}>
+        <Button className="mt-2 mb-2" onClick={handleShowAll}>
           Show All
-        </Button>
+        </Button> 
         </div>
         <Button className="mt-2 mb-2" onClick={handleClickNewItem}>
           Add New Item +

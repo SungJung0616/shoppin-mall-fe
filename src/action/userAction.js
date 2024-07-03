@@ -74,8 +74,7 @@ const registerUser =
   const updateUser = (userData) => async (dispatch) => {
     try {      
       dispatch({ type: types.UPDATE_USER_REQUEST });
-      const response = await api.put("/user/me", userData);
-      
+      const response = await api.put("/user/me", userData);      
       if (response.status !== 200) throw new Error(response.error);
       dispatch({ type: types.UPDATE_USER_SUCCESS, payload: response.data });
       dispatch(commonUiActions.showToastMessage("Profile updated successfully", "success"));
